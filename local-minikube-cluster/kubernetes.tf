@@ -4,7 +4,7 @@ provider "kubernetes" {
 
 resource "kubernetes_deployment" "nginx" {
   metadata {
-    name = "scalable-nginx-test"
+    name = "scalable-nginx-app"
     labels = {
       App = "ScalableNginxApp"
     }
@@ -25,8 +25,8 @@ resource "kubernetes_deployment" "nginx" {
       }
       spec {
         container {
-          image = "nginx:1.7.8"
-          name  = "nginx app"
+          image = "nginx:latest"
+          name  = "nginx-app"
 
           port {
             container_port = 80
@@ -34,12 +34,12 @@ resource "kubernetes_deployment" "nginx" {
 
           resources {
             limits = {
-              cpu    = "200m"
-              memory = "256Mi"
+              cpu    = "500m"
+              memory = "512Mi"
             }
             requests = {
-              cpu    = "100m"
-              memory = "128Mi"
+              cpu    = "250m"
+              memory = "50Mi"
             }
           }
         }
