@@ -1,1 +1,1 @@
-# terrarorm-script-kubernetes
+# terraform-script-kubernetes
