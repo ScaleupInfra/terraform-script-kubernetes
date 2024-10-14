@@ -2,7 +2,7 @@ data "terraform_remote_state" "eks" {
   backend = "local"
 
   config = {
-    path = "../lab-terraform-eks-2/terraform.tfstate"
+    path = "./terraform.tfstate"
   }
 }
 
@@ -27,9 +27,9 @@ provider "kubernetes" {
 
 resource "kubernetes_deployment" "nginx" {
   metadata {
-    name = "long-live-the-bat"
+    name = "scalable-nginx-app"
     labels = {
-      App = "LongLiveTheBat"
+      App = "ScalableNginxApp"
     }
   }
 
@@ -37,19 +37,19 @@ resource "kubernetes_deployment" "nginx" {
     replicas = 2
     selector {
       match_labels = {
-        App = "LongLiveTheBat"
+        App = "ScalableNginxApp"
       }
     }
     template {
       metadata {
         labels = {
-          App = "LongLiveTheBat"
+          App = "ScalableNginxApp"
         }
       }
       spec {
         container {
-          image = "nginx:1.7.8"
-          name  = "batman"
+          image = "nginx:latest"
+          name  = "nginx-app"
 
           port {
             container_port = 80
@@ -57,7 +57,7 @@ resource "kubernetes_deployment" "nginx" {
 
           resources {
             limits = {
-              cpu    = "0.5"
+              cpu    = "500m"
               memory = "512Mi"
             }
             requests = {
